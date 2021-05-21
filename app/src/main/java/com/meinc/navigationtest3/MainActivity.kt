@@ -7,10 +7,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.onNavDestinationSelected
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.*
 import com.meinc.navigationtest3.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -30,12 +27,14 @@ class MainActivity : AppCompatActivity() {
         appbarConfiguration= AppBarConfiguration(
                 //specifying top level destinations so the back button won't appear in action bar
                 //when switching among bottom nav destinations
-                setOf(R.id.homeFragment, R.id.searchFragment)
+                setOf(R.id.homeFragment, R.id.searchFragment),
+                //also pass in the drawer layout so the hamburger icon appears.
+                binding.drawerLayout
         )
 
         setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(navController, appbarConfiguration)
-
+        binding.navView.setupWithNavController(navController)
         binding.bottomNav.setupWithNavController(navController)
 
     }
@@ -59,6 +58,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
+        return navController.navigateUp(appbarConfiguration) || super.onSupportNavigateUp()
     }
 }
