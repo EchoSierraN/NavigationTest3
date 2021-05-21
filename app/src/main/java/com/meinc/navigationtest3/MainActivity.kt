@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         appbarConfiguration= AppBarConfiguration(
                 //specifying top level destinations so the back button won't appear in action bar
-                //when switching aming bottom nav destinations
+                //when switching among bottom nav destinations
                 setOf(R.id.homeFragment, R.id.searchFragment)
         )
 
