@@ -7,12 +7,16 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.meinc.navigationtest3.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    //creating appbar configuration to specify top level destination fragments later.
+    private lateinit var appbarConfiguration: AppBarConfiguration
 
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,8 +27,16 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
         navController = navHostFragment!!.findNavController()
 
+        appbarConfiguration= AppBarConfiguration(
+                //specifying top level destinations so the back button won't appear in action bar
+                //when switching aming bottom nav destinations
+                setOf(R.id.homeFragment, R.id.searchFragment)
+        )
+
         setSupportActionBar(binding.toolbar)
-        setupActionBarWithNavController(navController)
+        setupActionBarWithNavController(navController, appbarConfiguration)
+
+        binding.bottomNav.setupWithNavController(navController)
 
     }
 
